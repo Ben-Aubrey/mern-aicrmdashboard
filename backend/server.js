@@ -4,8 +4,10 @@ import cors from "cors";
 import morgan from "morgan";
 
 import { connectDB } from "./config/db.js";
-import { errorHandler, notFound } from "./middleware/error.middleware.js";
+import { notFound, errorHandler } from "./middleware/error.middleware.js";
 
+import authRoutes from "./routes/auth.routes.js";
+import leadRoutes from "./routes/lead.routes.js";
 
 const app = express();
 
@@ -26,13 +28,15 @@ app.get("/api/health", (req, res) =>
     res.json({ success: true, status: "ok", services: "TTP CRM API" })
 );
 
+app.use("/api/auth", authRoutes);
+app.use("/api/leads", leadRoutes);
+
 
 /* ---------------------------- Error handling (last) ---------------------------- */
 app.use(notFound);
 app.use(errorHandler);
 
-
-/* ---------------------------- Boot ---------------------------- */
+/* ----------------------------------- Boot ------------------------------------ */
 const PORT = process.env.PORT || 8000;
 
 const start = async () => {
