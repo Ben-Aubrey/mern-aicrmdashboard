@@ -10,7 +10,6 @@ import {
 import { protect } from "../middleware/auth.middleware.js";
 
 const router = Router();
-
 router.use(protect);
 
 router.patch("/reorder", reorderLeads);
