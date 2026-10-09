@@ -10,7 +10,7 @@ const toClientUser = (user) => ({
     role: user.role,
     company: user.company,
     avatar: user.avatar,
-    createdAt: user.createdAt
+    createdAt: user.createdAt,
 });
 
 export const register = asyncHandler (async (req, res) => {
@@ -32,7 +32,7 @@ export const register = asyncHandler (async (req, res) => {
         token: generateToken(user._id),
         user: toClientUser(user),
     });
-})
+});
 
 export const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
@@ -69,4 +69,3 @@ export const updateProfile = asyncHandler(async (req, res) => {
     await user.save();
     res.json({ success: true, user: toClientUser(user) });
 });
-

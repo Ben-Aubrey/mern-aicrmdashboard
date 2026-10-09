@@ -21,6 +21,7 @@ export const getOverview = asyncHandler(async (req, res) => {
         const bucket = byStage[l.status] || (byStage[l.status] = { count: 0, value: 0 });
         bucket.count += 1;
         bucket.value += l.value || 0;
+        totalValue += l.value || 0;
         if (l.status === "Won") wonValue += l.value || 0;
     }
 
@@ -77,7 +78,8 @@ export const getOverview = asyncHandler(async (req, res) => {
 
 const lastSixMonths = () => {
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const now = [];
+    const now = new Date();
+    const out = [];
     for (let i = 5; i >= 0; i--) {
         const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
         out.push({

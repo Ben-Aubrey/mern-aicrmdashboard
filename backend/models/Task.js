@@ -16,8 +16,8 @@ const taskSchema = new mongoose.Schema (
         dueDate: { type: Date, default: null },
         status: { type: String, enum: TASK_STATUSES, default: "Pending", index: true },
         priority: { type: String, enum: TASK_PRIORITIES, default: "Medium" },
-        relatedLead: { task: mongoose.Schema.Types.ObjectId, ref: "Lead", default: null },
-        relatedContact: { task: mongoose.Schema.Types.ObjectId, ref: "Contact", default: null },
+        relatedLead: { type: mongoose.Schema.Types.ObjectId, ref: "Lead", default: null },
+        relatedContact: { type: mongoose.Schema.Types.ObjectId, ref: "Contact", default: null },
         completedAt: { type: Date, default: null },
     },
     { timestamps: true }

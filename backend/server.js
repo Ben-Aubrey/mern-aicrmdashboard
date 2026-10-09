@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { connectDB } from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
@@ -16,6 +18,7 @@ import aiRoutes from "./routes/ai.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
 
 const app = express();
+const frontendDist = resolve(dirname(fileURLToPath(import.meta.url)), "../frontend/dist");
 
 /* ---------------------------- Middleware ---------------------------- */
 app.use(
@@ -42,6 +45,19 @@ app.use("/api/tasks", taskRoutes);
 
 app.use("/api/ai", aiRoutes);
 app.use("/api/analytics", analyticsRoutes);
+
+
+/* ------------------------ Frontend (production) ------------------------ */
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(frontendDist));
+    app.get("*", (req, res, next) => {
+        // Keep unknown API requests on the API 404 handler instead of returning the SPA.
+        if (req.path === "/api" || req.path.startsWith("/api/")) return next();
+        res.sendFile(resolve(frontendDist, "index.html"), (err) => {
+            if (err) next(err);
+        });
+    });
+}
 
 
 /* ---------------------------- Error handling (last) ---------------------------- */

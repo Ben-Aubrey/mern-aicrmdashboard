@@ -2,7 +2,6 @@ import { Note } from "../models/Note.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-
 export const getNotes = asyncHandler(async (req, res) => {
     const { lead, contact, search } = req.query;
     const filter = { owner: req.user._id };
@@ -13,7 +12,7 @@ export const getNotes = asyncHandler(async (req, res) => {
     const notes = await Note.find(filter)
     .sort({ pinned: -1, createdAt: -1 })
     .populate("lead", "name company")
-    .populate("contact", "name company")
+    .populate("contact", "name company");
 
     res.json({ sucess: true, count: notes.length, notes });
 });
@@ -44,10 +43,7 @@ export const updateNote = asyncHandler(async (req, res) => {
 });
 
 export const deleteNote = asyncHandler(async (req, res) => {
-    const note = await Note.findOneAndDelete({
-        _id: req.params.id,
-        owner: req.user._id,
-    });
+    const note = await Note.findOneAndDelete({ _id: req.params.id, owner: req.user._id, });
     if (!note) throw new ApiError(404, "Note not found");
     res.json({ success: true, message: "Note deleted" });
 });

@@ -1,7 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { ApiError } from "../utils/ApiError";
-import { model } from "mongoose";
-import { config } from "dotenv";
+import { ApiError } from "../utils/ApiError.js";
 
 let client = null;
 
@@ -129,7 +127,8 @@ export const generateEmail = async ({ lead, purpose, tone, sender }) => {
     return generateJSON(prompt, schema);
 };
 
-const generateSalesInsights = async (pipelineStats) => {
+
+export const generateSalesInsights = async (pipelineStats) => {
     const prompt = `You are a revenue-operations advisor. Given this snapshot of a 
     sales pipeline, identify what is working, what is at risk, and concrete actions
     to improve conversion.

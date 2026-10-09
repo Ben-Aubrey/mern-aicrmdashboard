@@ -42,5 +42,5 @@ export const errorHandler = (err, req, res, next) => {
         ...(process.env.NODE_ENV !== "production" && statusCode === 500
             ? { stack: err.stack }
             : {}),
-    })
+    });
 };

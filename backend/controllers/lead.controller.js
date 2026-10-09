@@ -16,7 +16,7 @@ export const getLeads = asyncHandler(async (req, res) => {
 
     const leads = await Lead.find(filter).sort({ order: 1, createdAt: -1 });
     res.json({ success: true, count: leads.length, leads });
-})
+});
 
 export const getLead = asyncHandler(async (req, res) => {
     const lead = await Lead.findOne({ _id: req.params.id, owner: req.user._id });
@@ -64,5 +64,4 @@ export const reorderLeads = asyncHandler(async (req, res) => {
 
     res.json({ success: true, message: "Pipeline updated" });
 });
-
 

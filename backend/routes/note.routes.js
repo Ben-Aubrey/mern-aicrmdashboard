@@ -4,7 +4,7 @@ import {
     createNote,
     updateNote,
     deleteNote,
-} from "../controllers/note.controller.js";
+} from "../controllers/notes.controller.js";
 import { protect } from "../middleware/auth.middleware.js";
 
 const router = Router();

@@ -1,6 +1,6 @@
 import { Task } from "../models/Task.js";
-import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
 
 export const getTasks = asyncHandler(async (req, res) => {
     const { status, priority, relatedLead } = req.query;
@@ -14,11 +14,11 @@ export const getTasks = asyncHandler(async (req, res) => {
     .populate("relatedLead", "name company")
     .populate("relatedContact", "name company");
 
-    res.json({ success: true, count: tasks.length, tasks })
+    res.json({ success: true, count: tasks.length, tasks });
 });
 
 export const createTask = asyncHandler(async (req, res) => {
-    const task = await Task.create({ ...req.body, owner: req.iser._id });
+    const task = await Task.create({ ...req.body, owner: req.user._id });
     res.status(201).json({ success: true, task });
 });
 
@@ -39,7 +39,7 @@ export const updateTask = asyncHandler(async (req, res) => {
     );
     if (!task) throw new ApiError(404, "Task not found");
     res.json({ success: true, task });
-})
+});
 
 export const deleteTask = asyncHandler(async (req, res) => {
     const task = await Task.findOneAndDelete({

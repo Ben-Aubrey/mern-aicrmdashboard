@@ -24,8 +24,7 @@ const leadSchema = new mongoose.Schema (
         priority: {
             type: String,
             enum: LEAD_PRIORITIES,
-            default: true,
-            index: true,
+            default: "Medium",
         },
         source: {
             type: String,
