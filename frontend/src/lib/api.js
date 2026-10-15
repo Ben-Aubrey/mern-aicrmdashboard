@@ -1,8 +1,8 @@
 import axios from "axios";
 export const TOKEN_KEY = "ttp_crm_token";
 
-
-const baseURL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+// we have to make this dynamic since there isn't localhost in production
+const baseURL = import.meta.env.VITE_API_URL === "development" ? "http://localhost:8000/api" : "/api";
 
 const api = axios.create({ baseURL });
 
